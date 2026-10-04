@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>To-Do List</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #taskInput {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #addButton {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #addButton:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background-color: #f8f8f8;
+            padding: 12px;
+            margin-bottom: 10px;
+
+            border-radius: 5px;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My To-Do List</h1>
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a task">
+
+            <button id="addButton">
+                Add Task
+            </button>
+
+        </div>
+
+        <!-- Tasks will be added here -->
+        <ul id="taskList"></ul>
+
+    </div>
+
+
+    <script>
+
+        // Select HTML elements using DOM
+        const taskInput = document.getElementById("taskInput");
+        const addButton = document.getElementById("addButton");
+        const taskList = document.getElementById("taskList");
+
+
+        // Add task when button is clicked
+        addButton.addEventListener("click", function () {
+
+            const taskText = taskInput.value.trim();
+
+            // Check if input is empty
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+
+            // Create a new list item
+            const li = document.createElement("li");
+
+            // Create task text
+            const span = document.createElement("span");
+            span.textContent = taskText;
+
+
+            // Create delete button
+            const deleteButton = document.createElement("button");
+
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-btn";
+
+
+            // Mark task as completed when clicked
+            span.addEventListener("click", function () {
+                li.classList.toggle("completed");
+            });
+
+
+            // Delete task
+            deleteButton.addEventListener("click", function () {
+                li.remove();
+            });
+
+
+            // Add elements to list item
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+
+            // Add list item to task list
+            taskList.appendChild(li);
+
+
+            // Clear input box
+            taskInput.value = "";
+
+            // Put cursor back in input
+            taskInput.focus();
+        });
+
+
+        // Add task when Enter key is pressed
+        taskInput.addEventListener("keypress", function (event) {
+
+            if (event.key === "Enter") {
+                addButton.click();
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
